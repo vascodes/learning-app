@@ -1,0 +1,48 @@
+=============================================================================
+FILE MANAGER
+=============================================================================
+
+filemanager.h:    
+    create_file(filename); [OPTIONAL]
+    read_line(filename, line_num);    
+    append_line_to_end(filename, str);
+
+filemanager.c
+    file_ptr
+    is_file_exists = false
+    
+    bool create_file(filename):
+        set is_open = false
+        fptr = open file with given filename in write mode.
+        if file is created successfully:
+            set is_open to true
+        close file.
+
+        return is_open.
+    
+    string read_line(filename, line_num):
+        string str.
+        set is_file_exists to false.
+        fptr = open file with given filename in read mode.
+        if file exists:
+            set is_file_exists to true
+            str = string at given line_num of file.        
+        close file.
+
+        if is_file_exists is true:            
+            return str.
+         
+        return error.
+    
+    bool append_line_to_end(filename, str):
+        set is_file_exists to false.
+        fptr = open file with given filename in append mode.
+        if file exists:
+            set is_file_exists to true            
+            append str to file.
+        close file.
+
+        return is_file_exists.   
+
+    bool replace_line(string filename, int line_num, string question_str):
+        replace line at line_num of given file with given question_str.

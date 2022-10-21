@@ -1,0 +1,44 @@
+================================================
+UIManager - Manages UI.
+================================================
+    ui_main_menu():
+        display main menu
+        read choice from user        
+        show sub menus OR call required function in sessionmanager
+
+====================================================
+MENU EXAMPLE
+====================================================
+
+========================================
+    MAIN MENU
+========================================
+    1. Start a new learning session.    
+    2. Resume previous learning session. [OPTIONAL]
+    3. Add Questions and Answers. [OPTIONAL]
+    4. Show all Questions and Answers.
+    5. Exit
+
+read option from user.
+
+option 1: 
+    WARN: Previous learning session data, if any, will be lost! Continue? [OPTIONAL]
+    if continue:                        
+        sessionmanager.sm_new()
+    else:
+        go back to main menu.
+
+option 2: [OPTIONAL]            
+    sessionmanager.sm_resume()
+
+option 3:
+    sessionmanager.sm_add_question_from_user() [OPTIONAL]
+
+option 4:
+    display all questions along with answers from qalist.txt
+
+option 5: 
+    exit program.
+
+main.c
+    call ui_main_menu() from UIManager.

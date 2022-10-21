@@ -1,0 +1,149 @@
+=============================================================================
+SESSION MANAGER - Manages a learning session.
+=============================================================================
+
+sessionmanager.h:    
+    
+    typedef struct sm_question{
+        int frequency;
+        char question[200];
+        char answer[200];
+    } question;
+        
+    MAX_FREQ - maximum frequency.
+    question *sm_questions_arr (dynamic collection of elements of the type question.)       
+    question_format_str = "%s|%s|%d\n". (ie. "question|answer|frequency\n") 
+
+    sm_create_questions(frequency)
+    sm_get_question_from_str(question_str)
+    sm_get_str_from_question(question q)
+    sm_get_question_str(string question, string answer, int freq)
+    sm_add_question_from_user(filename)
+    sm_create_questions(frequency)    
+    sm_save_question(question q)
+    sm_get_questions()
+    sm_set_questions_arr()
+    sm_start()
+    sm_new()
+    sm_resume()
+    sm_end()
+    sm_is_correct_answer(question_str, answer_str)
+
+sessionmanager.c:          
+       
+    filename is "qalist.txt"    
+    
+    question sm_get_question_from_str(question_str):
+        question q
+        // TODO: validate question_str format (optional).
+        question_str_split_arr = split question_str based on delimiter. [0 => question, 1 => answer, 2 => freq]
+        q.question = question_str_split_arr[0]
+        q.answer = question_str_split_arr[1]
+        q.freq = question_str_split_arr[2]
+        
+        return q
+
+    string sm_get_str_from_question(question q):
+        return q formatted as question_format_str.
+
+    string sm_get_question_str(string question, string answer, int freq):
+        return function args formatted as question_format_str.
+    
+    sm_add_question_from_user(filename):        
+        read a question, answer and frequency from user.
+        question_str = sm_get_question_str(question, answer, frequency).
+        filemanager.append_line_to_end(filename, question_str)            
+
+    sm_create_questions(frequency):
+        filemanager.create_file(filename)
+        read num_questions from user.
+        repeat for num_questions times:
+            sm_add_question_from_user(filename)
+    
+    sm_is_correct_answer(q, answer_str):
+        return false if answer_str is not same as that of q.answer.
+    
+    sm_set_questions_arr():
+        line_num = 0
+        question q
+        
+        while filemanager.read_line(filename, line_num) is not NULL:
+            question_str = filemanager.read_line(filename, line_num)
+            q = sm_get_question_from_str(question_str)
+            if q.freq > 0:
+                add q to sm_questions_arr                
+            Increment line_num by 1.        
+    
+    sm_start():
+        sm_set_questions_arr()
+
+        if sm_questions_arr is empty:
+            display "All questions mastered. Please start a new session."
+            // TODO [OPTIONAL]: Provide option to reset frequency instead of starting new session.
+        
+        // sort questions based on priority  
+        for each question q in sm_questions_arr:
+            add q to sm_priority_queue.           
+        
+        while sm_priority_queue AND sm_question_queue IS NOT empty:
+            dequeue all elements from sm_priority_queue to sm_question_queue.
+            
+            while sm_question_queue IS NOT empty:
+                is_correct = false.
+                q = rear element of sm_question_queue.
+                ask q.question to user.
+                read answer from user.
+                
+                prev_freq = q.frequency.
+                is_answer_correct = sm_is_correct_answer(q, answer).
+                if is_answer_correct:
+                    display "Answer is correct!"
+                    if q.freq IS NOT 1:
+                        decrement q.frequency by 1.
+                    
+                    if q.frequency IS 1: // min frequency is 1
+                        sm_save_question(q)
+                    else:
+                        enqueue q to sm_priority_queue.                
+                else:
+                    display "Answer is WRONG!"
+                    if q.frequency IS NOT MAX_FREQ:
+                        increment q.frequency by 1.
+                    enqueue q to sm_priority_queue.                
+                
+                // Write to file only if frequency of question changes.
+                if prev_freq IS NOT same as q.freq:
+                    sm_save_question(q).
+
+                dequeue sm_question_queue.
+
+                // TODO: use uimanager for prompt.
+                prompt user to continue?
+                if NOT continue:                
+                    sm_end()
+                    break   
+
+        display "Session completed!"
+        sm_end()
+    
+    sm_new():
+        MAX_FREQ = read frequency from user.
+        sm_create_questions(MAX_FREQ)
+
+        sm_start()
+
+    sm_resume():
+        if file does not exist OR file is empty:        
+            sm_new()
+        else:
+            sm_start()
+
+    sm_save_question(question q):
+        line_num = index of q in sm_questions_arr.
+        question_str = sm_get_str_from_question(q)
+        filemanager.replace_line(filename, line_num, question_str)
+    
+    sm_end():        
+        go back to Main menu in uimanager.
+
+            
