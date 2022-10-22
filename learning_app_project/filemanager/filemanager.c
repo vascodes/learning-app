@@ -27,12 +27,9 @@ int append_line_to_end(char *filename, char str[100]){
 	int is_str_appended;	
 	file_ptr = fopen(filename, "a");	
 			
-	if(file_ptr == NULL){
-		printf("\nError! Could not open file.");
-		return 0;
+	if(file_ptr != NULL){		
+		is_str_appended = fputs(str, file_ptr);
 	}
-
-	is_str_appended = fputs(str, file_ptr);	
 	
 	fclose(file_ptr);
 	return is_str_appended;
@@ -44,8 +41,10 @@ char *get_line_by_number(char *filename, int line_num){
 	char *str = (char *) malloc(max_len * sizeof(char));
 
 	file_ptr = fopen(filename, "r");			
+	
+	// If file could not be opened.
 	if(file_ptr == NULL)
-		printf("\nError. Could not open file %s\n.", filename);
+		str = NULL;
 	else{
 		// Read each line from file to str until given line number.
 		while(fgets(str, max_len, file_ptr)){			
