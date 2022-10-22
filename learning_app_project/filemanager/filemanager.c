@@ -5,10 +5,6 @@
 
 FILE *file_ptr;
 
-/*
-	Creates a file with given file name.
-	Returns 1 if file is created else 0.
-*/
 int create_file(char *filename){
 	int is_created;
 	
@@ -20,10 +16,6 @@ int create_file(char *filename){
 	return is_created;	
 }
 
-/*
-	Deletes a file with given file name.
-	Returns 1 if file is deleted else 0.
-*/
 int delete_file(char *filename){
 	int is_deleted;
 	is_deleted = remove(filename);	
@@ -31,13 +23,6 @@ int delete_file(char *filename){
 	return is_deleted;
 }
 
-/*
-	To append a line to end of specified file.
-	filename - Name of file
-	str - String that is to be appended. 		
-	
-	Returns 1 if line is appended else 0.
-*/
 int append_line_to_end(char *filename, char str[100]){
 	int is_str_appended;	
 	file_ptr = fopen(filename, "a");	
@@ -53,13 +38,6 @@ int append_line_to_end(char *filename, char str[100]){
 	return is_str_appended;
 }
 
-/*
-	To get a specified line using line number from a file.	
-	file_name: Name of file.
-	line_num: 	Line number of line to be read from file.
-	
-	Returns line read from file.					
-*/
 char *get_line_by_number(char *filename, int line_num){	
 	int is_file_exists;
 	int curr_line = 1, max_len = 150;
@@ -69,13 +47,13 @@ char *get_line_by_number(char *filename, int line_num){
 	if(file_ptr == NULL)
 		printf("\nError. Could not open file %s\n.", filename);
 	else{
+		// Read each line from file to str until given line number.
 		while(fgets(str, max_len, file_ptr)){			
 			if(curr_line == line_num)
 				break;
 							
 			curr_line++;			
-		}
-		printf("\nstring is: %s\n", str);
+		}		
 	}
 	
 	fclose(file_ptr);
