@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h> 
+
 #include "filemanager.h"
 
 FILE *file_ptr;
@@ -37,10 +38,10 @@ int append_line_to_end(char *filename, char str[100]){
 	return is_str_appended;
 }
 
-// TODO: Add out str as parameter instead of returning str.
+// TODO: Create config file for max string len etc.
 void get_line_by_number(char *filename, int line_num, char *out_str){	
 	int curr_line = 1, 
-		max_len = strlen(out_str);
+		max_len = 200;
 	
 	file_ptr = fopen(filename, "r");			
 	
@@ -49,7 +50,7 @@ void get_line_by_number(char *filename, int line_num, char *out_str){
 		out_str = NULL;
 	else{
 		// Read each line from file to str until given line number.
-		while(fgets(out_str, max_len, file_ptr)){			
+		while(fgets(out_str, max_len, file_ptr)){						
 			if(curr_line == line_num)
 				break;
 							

@@ -35,7 +35,7 @@ void qm_add_question_from_user(){
 	append_line_to_end(DEFAULT_FILENAME, question_str);
 }
 
-void qm_create_questions(int frequency){	
+void qm_create_questions(){	
 	int num, i;
 	
 	create_file(DEFAULT_FILENAME);

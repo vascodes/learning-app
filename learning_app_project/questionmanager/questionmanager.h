@@ -21,7 +21,7 @@ void get_str_from_question(question q, char *out_str);
 
 void qm_add_question_from_user();
 
-void qm_create_questions(int frequency);
+void qm_create_questions();
 
 int qm_is_correct_answer(question q, char *ans_str);
 
