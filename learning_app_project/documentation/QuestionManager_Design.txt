@@ -1,5 +1,5 @@
 =============================================================================
-QUESTION MANAGER - Manages a learning question.
+QUESTION MANAGER - Manages a learning session.
 =============================================================================
 
 questionmanager.h:    
