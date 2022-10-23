@@ -14,8 +14,6 @@ typedef struct qm_question{
     char answer[MAX_STR_LEN];
 } question;
 
-question questions_arr[MAX_QUESTIONS];
-
 void *qm_get_question_str(char *question, char *answer, int freq, char out_str[]);
 
 int qm_get_question_from_str(char question_str[], question *out_question);
@@ -29,5 +27,7 @@ void qm_create_questions();
 int qm_is_correct_answer(question q, char *ans_str);
 
 void qm_set_questions_arr();
+
+int qm_get_all_questions(question out_arr[]);
 
 #endif

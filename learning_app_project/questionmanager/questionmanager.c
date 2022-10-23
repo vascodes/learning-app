@@ -4,6 +4,11 @@
 #include "../filemanager/filemanager.h"
 #include "../questionmanager/questionmanager.h"
 
+int questions_arr_len;
+question questions_arr[MAX_QUESTIONS];
+
+question *qm_priority_queue;
+
 void *qm_get_question_str(char *question, char *answer, int freq, char out_str[]){
 	snprintf(out_str, MAX_STR_LEN, QUESTION_FORMAT_STR, question, answer, freq);
 }
@@ -89,12 +94,23 @@ void qm_set_questions_arr(){
 	
 	i = 0;
 	line_num = 1;	
-	is_line_found = fm_get_line_by_number(DEFAULT_FILENAME, line_num, line);
 	// Read all lines from a file and store it to an array of questions.
+	is_line_found = fm_get_line_by_number(DEFAULT_FILENAME, line_num, line);
 	while(is_line_found){									
 		qm_get_question_from_str(line, &q);
 		questions_arr[i++] = q;
 		line_num++;		
 		is_line_found = fm_get_line_by_number(DEFAULT_FILENAME, line_num, line);		
-	}				
+	}
+	questions_arr_len = line_num-1;		
 }
+
+int qm_get_all_questions(question out_arr[]){
+	int i;
+	for(i = 0; i < questions_arr_len; i++){
+		out_arr[i] = questions_arr[i];
+	}
+	
+	return i;
+}
+
