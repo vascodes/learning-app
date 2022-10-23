@@ -29,12 +29,12 @@ int delete_file(char *filename);
 int append_line_to_end(char *filename, char str[]);
 
 /*
-	To get a specified line using line number from a file.	
-	file_name: Name of file.
+	To get a specified line using line number from a file.
+		
+	filename: Name of file.
 	line_num: Line number of line to be read from file.
-	
-	Returns line read from file.					
+	out_str: string to which line from file is stored.							
 */
-char *get_line_by_number(char *filename, int line_num);
+void get_line_by_number(char *filename, int line_num, char *out_str);
 
 #endif

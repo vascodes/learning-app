@@ -38,18 +38,18 @@ int append_line_to_end(char *filename, char str[100]){
 }
 
 // TODO: Add out str as parameter instead of returning str.
-char *get_line_by_number(char *filename, int line_num){	
-	int curr_line = 1, max_len = 150;
-	char *str = (char *) malloc(max_len * sizeof(char));
-
+void get_line_by_number(char *filename, int line_num, char *out_str){	
+	int curr_line = 1, 
+		max_len = strlen(out_str);
+	
 	file_ptr = fopen(filename, "r");			
 	
 	// If file could not be opened.
 	if(file_ptr == NULL)
-		str = NULL;
+		out_str = NULL;
 	else{
 		// Read each line from file to str until given line number.
-		while(fgets(str, max_len, file_ptr)){			
+		while(fgets(out_str, max_len, file_ptr)){			
 			if(curr_line == line_num)
 				break;
 							
@@ -58,5 +58,4 @@ char *get_line_by_number(char *filename, int line_num){
 	}
 	
 	fclose(file_ptr);
-	return str;
 }
