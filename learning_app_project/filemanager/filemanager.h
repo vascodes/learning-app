@@ -3,19 +3,19 @@
 
 /*
 	Creates a file with given file name.
-	Returns 1 if file is created else 0.
+	Returns 0 if file is created successfully.
 */
 int create_file(char *filename);
 
 /*
 	Renames a file with given new_filename.
-	Returns 0 if file rename is successful.
+	Returns 0 if file is renamed successfully.
 */
 int rename_file(char old_filename[], char new_filename[]);
 
 /*
 	Deletes a file with given filename.
-	Returns 1 if file is deleted else 0.
+	Returns 0 if file is deleted successfully.
 */
 int delete_file(char *filename);
 
@@ -24,7 +24,7 @@ int delete_file(char *filename);
 	filename - Name of file
 	str[] - String that is to be appended. 		
 	
-	Returns 1 if line is appended else 0.
+	Returns 0 if line is appended successfully.
 */
 int append_line_to_end(char *filename, char str[]);
 
