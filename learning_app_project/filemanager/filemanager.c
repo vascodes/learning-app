@@ -21,10 +21,7 @@ int rename_file(char old_filename[100], char new_filename[100]){
 }
 
 int delete_file(char *filename){
-	int is_deleted;
-	is_deleted = remove(filename);	
-	
-	return is_deleted;
+	return remove(filename);
 }
 
 int append_line_to_end(char *filename, char str[100]){
