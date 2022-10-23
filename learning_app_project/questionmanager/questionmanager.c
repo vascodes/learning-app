@@ -1,1 +1,0 @@
-#include "questionmanager/questionmanager.h"
