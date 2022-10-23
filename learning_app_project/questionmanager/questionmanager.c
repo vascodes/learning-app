@@ -4,22 +4,14 @@
 #include "../filemanager/filemanager.h"
 #include "../questionmanager/questionmanager.h"
 
-#define DEFAULT_FREQ 2
-#define DEFAULT_FILENAME "qalist.txt"
-#define DEFAULT_DELIMITER "|"
-
-char QUESTION_FORMAT_STR[20] = "%s|%s|%d\n";
-
-
 void *qm_get_question_str(char *question, char *answer, int freq, char out_str[]){
-	int max_len = 200;
-	snprintf(out_str, max_len, QUESTION_FORMAT_STR, question, answer, freq);
+	snprintf(out_str, MAX_STR_LEN, QUESTION_FORMAT_STR, question, answer, freq);
 }
 
 void qm_add_question_from_user(){
 	int fq = DEFAULT_FREQ;
-	char qn[100], ans[100];
-	char question_str[200];
+	char qn[MAX_STR_LEN], ans[MAX_STR_LEN];
+	char question_str[MAX_STR_LEN];
 	char ch;
 	
 	printf("\nEnter a question: ");
@@ -55,13 +47,13 @@ void qm_create_questions(int frequency){
 	}
 }
 
-int qm_get_question_from_str(char question_str[200], question *out_question){
+int qm_get_question_from_str(char question_str[MAX_STR_LEN], question *out_question){
 	int i, index = 0, question_str_len;
 	char *str;		
 	char str_split_arr[5][strlen(question_str)];
 	
 	/*
-		Split contents of a string with delimiter to an array.
+		Split contents of a string with delimiter to an array.		
 		
 		example: 	If question_str = "Hello|World|10", then
 					str_split_arr will be ["Hello", "World", "10"]
