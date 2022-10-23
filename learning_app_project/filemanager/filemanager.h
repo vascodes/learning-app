@@ -35,6 +35,6 @@ int fm_append_line_to_end(char *filename, char str[]);
 	line_num: Line number of line to be read from file.
 	out_str: string to which line from file is stored.							
 */
-void fm_get_line_by_number(char *filename, int line_num, char *out_str);
+int fm_get_line_by_number(char *filename, int line_num, char *out_str);
 
 #endif

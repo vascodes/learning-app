@@ -39,8 +39,9 @@ int fm_append_line_to_end(char *filename, char str[100]){
 }
 
 // TODO: Create config file for max string len etc.
-void fm_get_line_by_number(char *filename, int line_num, char *out_str){	
+int fm_get_line_by_number(char *filename, int line_num, char *out_str){	
 	int curr_line = 1, 
+		is_line_found = 0,
 		max_len = 200;
 	
 	file_ptr = fopen(filename, "r");			
@@ -48,15 +49,21 @@ void fm_get_line_by_number(char *filename, int line_num, char *out_str){
 	// If file could not be opened.
 	if(file_ptr == NULL)
 		out_str = NULL;
-	else{
+	else{		
 		// Read each line from file to str until given line number.
-		while(fgets(out_str, max_len, file_ptr)){						
-			if(curr_line == line_num)
+		while(fgets(out_str, max_len, file_ptr) != NULL){									
+			if(curr_line == line_num){
+				is_line_found = 1;
 				break;
-							
+			}
+										
 			curr_line++;			
-		}		
+		}				
 	}
 	
+	if(is_line_found == 0)
+		strcpy(out_str, "");
+		
 	fclose(file_ptr);
+	return is_line_found;
 }
