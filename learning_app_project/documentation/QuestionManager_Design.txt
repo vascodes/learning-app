@@ -78,7 +78,7 @@ questionmanager.c:
         qm_set_questions_arr()
 
         if qm_questions_arr is empty:
-            display "All questions mastered. Please start a new question."
+            display "All questions mastered. Please start a new session."
             // TODO [OPTIONAL]: Provide option to reset frequency instead of starting new question.
         
         // sort questions based on priority  

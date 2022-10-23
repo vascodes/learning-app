@@ -32,13 +32,13 @@ void qm_add_question_from_user(){
 	}
 	
 	qm_get_question_str(qn, ans, fq, question_str);
-	append_line_to_end(DEFAULT_FILENAME, question_str);
+	fm_append_line_to_end(DEFAULT_FILENAME, question_str);
 }
 
 void qm_create_questions(){	
 	int num, i;
 	
-	create_file(DEFAULT_FILENAME);
+	fm_create_file(DEFAULT_FILENAME);
 	printf("\nPlease enter the number of questions you want to enter: ");
 	scanf("%d", &num);
 	getchar(); // To discard the enter key press.
@@ -81,4 +81,20 @@ int qm_is_correct_answer(question q, char *ans_str){
 	return strcmpi(q.answer, ans_str);
 }
 
-
+void qm_set_questions_arr(){
+	int line_num, i;
+	int is_line_found;
+	char line[MAX_STR_LEN];
+	question q;
+	
+	i = 0;
+	line_num = 1;	
+	is_line_found = fm_get_line_by_number(DEFAULT_FILENAME, line_num, line);
+	// Read all lines from a file and store it to an array of questions.
+	while(is_line_found){									
+		qm_get_question_from_str(line, &q);
+		questions_arr[i++] = q;
+		line_num++;		
+		is_line_found = fm_get_line_by_number(DEFAULT_FILENAME, line_num, line);		
+	}				
+}
