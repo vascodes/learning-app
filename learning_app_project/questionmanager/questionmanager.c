@@ -73,6 +73,8 @@ int qm_get_question_from_str(char question_str[MAX_STR_LEN], question *out_quest
 	return;	
 }
 
-
+void get_str_from_question(question q, char *out_str){
+	snprintf(out_str, MAX_STR_LEN, QUESTION_FORMAT_STR, q.question, q.answer, q.frequency);
+}
 
 

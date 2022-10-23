@@ -15,6 +15,7 @@ typedef struct qm_question{
 
 void *qm_get_question_str(char *question, char *answer, int freq, char out_str[]);
 int qm_get_question_from_str(char question_str[], question *out_question);
+void get_str_from_question(question q, char *out_str);
 void qm_add_question_from_user();
 void qm_create_questions(int frequency);
 

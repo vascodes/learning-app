@@ -11,5 +11,8 @@ int main() {
 	printf("\nThe answer is: %s", q.answer);
 	printf("\nThe freq is: %d", q.frequency);
 	
+	get_str_from_question(q, str);
+	printf("\nstr is: %s", str);
+	
 	return 0;
 }
