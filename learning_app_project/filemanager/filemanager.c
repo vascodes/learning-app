@@ -6,7 +6,7 @@
 
 FILE *file_ptr;
 
-int create_file(char *filename){
+int fm_create_file(char *filename){
 	int is_created;
 	
 	file_ptr = fopen(filename, "w");
@@ -17,15 +17,15 @@ int create_file(char *filename){
 	return is_created;	
 }
 
-int rename_file(char old_filename[100], char new_filename[100]){
+int fm_rename_file(char old_filename[100], char new_filename[100]){
 	return rename(old_filename, new_filename);
 }
 
-int delete_file(char *filename){
+int fm_delete_file(char *filename){
 	return remove(filename);
 }
 
-int append_line_to_end(char *filename, char str[100]){
+int fm_append_line_to_end(char *filename, char str[100]){
 	int is_str_appended;	
 	file_ptr = fopen(filename, "a");	
 			
@@ -39,7 +39,7 @@ int append_line_to_end(char *filename, char str[100]){
 }
 
 // TODO: Create config file for max string len etc.
-void get_line_by_number(char *filename, int line_num, char *out_str){	
+void fm_get_line_by_number(char *filename, int line_num, char *out_str){	
 	int curr_line = 1, 
 		max_len = 200;
 	
