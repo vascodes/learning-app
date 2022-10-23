@@ -8,13 +8,19 @@
 int create_file(char *filename);
 
 /*
-	Deletes a file with given file name.
+	Renames a file with given new_filename.
+	Returns 0 if file rename is successful.
+*/
+int rename_file(char old_filename[], char new_filename[]);
+
+/*
+	Deletes a file with given filename.
 	Returns 1 if file is deleted else 0.
 */
 int delete_file(char *filename);
 
 /*
-	To append a line to end of specified file.
+	To append a line to end of a file.
 	filename - Name of file
 	str[] - String that is to be appended. 		
 	

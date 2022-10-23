@@ -42,7 +42,8 @@ filemanager.c
             append str to file.
         close file.
 
-        return is_file_exists.   
+        return is_file_exists.      
 
-    bool replace_line(string filename, int line_num, string question_str):
-        replace line at line_num of given file with given question_str.
+    bool rename_file(string old_filename, string new_filename){
+        return rename(old_filename, new_filename);
+    }
