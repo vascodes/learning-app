@@ -77,4 +77,8 @@ void get_str_from_question(question q, char *out_str){
 	snprintf(out_str, MAX_STR_LEN, QUESTION_FORMAT_STR, q.question, q.answer, q.frequency);
 }
 
+int qm_is_correct_answer(question q, char *ans_str){
+	return strcmpi(q.answer, ans_str);
+}
+
 

@@ -14,5 +14,7 @@ int main() {
 	get_str_from_question(q, str);
 	printf("\nstr is: %s", str);
 	
+	printf("\nis ans correct: %d", qm_is_correct_answer(q, "eins"));
+	
 	return 0;
 }
