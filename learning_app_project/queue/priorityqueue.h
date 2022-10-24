@@ -3,6 +3,6 @@
 
 #include "../questionmanager/questionmanager.h"
 
-int *pq;
+question *pq;
 
 #endif

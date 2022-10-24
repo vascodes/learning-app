@@ -11,18 +11,41 @@ int main() {
 	//qm_start();
 			
 	int pq_size = 10;
-	pq = (int *) malloc(pq_size * sizeof(int));	
+	pq = (question *) malloc(pq_size * sizeof(question));	
+		
+	question q1;
+	strcpy(q1.question, "q1");
+	strcpy(q1.answer, "a1");
+	q1.frequency = 2;
 	
-	pq_enqueue(3);
-    pq_enqueue(4);
-    pq_enqueue(9);
-    pq_enqueue(5);
-    pq_enqueue(2);
-    pq_enqueue(10);
+	question q2;
+	strcpy(q2.question, "q2");
+	strcpy(q2.answer, "a2");
+	q2.frequency = 5;
 	
-	printf("\nDeleted: %d", pq_dequeue());
-	printf("\nDeleted: %d", pq_dequeue());
-	printf("\nDeleted: %d", pq_dequeue());
+	question q3;
+	strcpy(q3.question, "q3");
+	strcpy(q3.answer, "a3");
+	q3.frequency = 3;
+	
+	pq_enqueue(q1);
+    pq_enqueue(q2);    
+    pq_enqueue(q3);    
+		
+	display();		
+
+	question t;
+	pq_dequeue(&t);
+	printf("\nDeleted: %s|%s|%d", t.question, t.answer, t.frequency);
+	pq_dequeue(&t);
+	printf("\nDeleted: %s|%s|%d", t.question, t.answer, t.frequency);
+	pq_dequeue(&t);
+	printf("\nDeleted: %s|%s|%d", t.question, t.answer, t.frequency);
+//	
+//	pq_dequeue(&t);
+//	printf("\nDeleted: %s|%s|%s", t.question, t.answer, t.frequency);
+
+//	display();
 		
 	return 0;
 }
