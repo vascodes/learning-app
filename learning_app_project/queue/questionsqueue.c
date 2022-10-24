@@ -37,20 +37,6 @@ void queue_dequeue(question *out_question){
 	}
 }
 
-void queue_sort(question *pq, int n){
-	int i, j;
-	question temp;
-	for(i = 0; i < n; i++){
-		for(j = i+1; j < n; j++){
-			if(pq[i].frequency < pq[j].frequency){
-				temp = pq[i];
-				pq[i] = pq[j];
-				pq[j] = temp;
-			}
-		}
-	}
-}
-
 void queue_display(){
 	if(is_queue_empty())
 		return;		

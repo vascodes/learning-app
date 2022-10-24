@@ -27,6 +27,8 @@ void qm_create_questions();
 
 int qm_is_correct_answer(question q, char *ans_str);
 
+int get_questions_arr_len();
+
 void qm_set_questions_arr();
 
 int qm_get_all_questions(question out_arr[]);

@@ -115,18 +115,26 @@ int qm_get_all_questions(question out_arr[]){
 	return i;
 }
 
+int get_questions_arr_len(){
+	return questions_arr_len;
+}
+
 void qm_start(){
 	char ch;
+	
 	int num_questions, i;
 	int is_session_done, is_exit;
+	int max_freq_from_list = 1;
+	
 	question q;
 	question questions[MAX_QUESTIONS];
 	
 	qm_set_questions_arr();
 	num_questions = qm_get_all_questions(questions);
 	
+	// No questions in list.
 	if(num_questions == 0){
-		printf("\nNo questions left to learn. Please start a new session.\n");
+		qm_session_done();
 	}
 	else{
 		priority_queue = (question *) malloc(num_questions * sizeof(question));		
@@ -144,7 +152,7 @@ void qm_start(){
 			system("cls");							
 			
 			// Dequeue all priority queue elements to question queue.			
-			while(is_pq_empty() == 0){
+			while(pq_is_empty() == 0){
 				question temp;
 				pq_dequeue(&temp);				
 				queue_enqueue(temp);								
@@ -195,11 +203,13 @@ void qm_start(){
 															
 					// enqueue to priority queue.
 					pq_enqueue(new_question);					
-				}																		
+				}
+				printf("\nPress any key to show next question.");
+				getchar();																		
 			}			
 			
 			// When all questions have been mastered.
-			if(is_pq_empty() == 1 && is_queue_empty() == 1){
+			if(pq_is_empty() == 1 && is_queue_empty() == 1){
 				is_session_done = 1;								
 			}
 			
@@ -211,14 +221,14 @@ void qm_start(){
 					is_exit = 1;				
 				}								
 			}				
-		} while(is_pq_empty() == 0 || is_queue_empty() == 0);		
-	}	
+		} while(pq_is_empty() == 0 || is_queue_empty() == 0);		
 	
-	if(is_session_done)
-		qm_session_done();
+		if(is_session_done)
+			qm_session_done();
 	
-	if(is_exit)
-		qm_exit();	
+		if(is_exit)
+			qm_exit();	
+	}			
 }
 
 void qm_session_done(){	

@@ -87,7 +87,7 @@ void pq_enqueue(question q){
 	_insert_to_heap(q);
 }
 
-int is_pq_empty(){	
+int pq_is_empty(){	
 	return size == 0;
 }
 
@@ -98,7 +98,7 @@ void pq_display() {
 }
 
 void pq_clear(){
-	while(!is_pq_empty()){
+	while(!pq_is_empty()){
 		question temp;
 		pq_dequeue(&temp);
 	}	

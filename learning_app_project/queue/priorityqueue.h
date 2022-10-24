@@ -7,6 +7,8 @@ question *priority_queue;
 
 void pq_dequeue(question *out_question);
 void pq_enqueue(question q);
-int is_pq_empty();
+void pq_display();
+int pq_is_empty();
+void pq_clear();
 
 #endif

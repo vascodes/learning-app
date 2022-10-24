@@ -12,7 +12,7 @@ int main() {
 		int option;
 		printf("\n\tSMART LEARNING APP MAIN MENU\n");
 		printf("\n1. Start a new learning session.");
-		printf("\n2. Resume previous learning session.");
+		printf("\n2. Start previous learning session.");
 		printf("\n3. Exit.");
 		printf("\nEnter an option (1/2/3): ");
 		scanf("%d", &option);
