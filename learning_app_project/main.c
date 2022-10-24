@@ -19,14 +19,24 @@ int main() {
 		getchar();
 		
 		switch(option){
-			case 1: qm_create_questions();
-					qm_start();
+			case 1: printf("\nWARNING! Starting a new session will erase data of previous session. Continue?(y/n): ");
+					scanf("%c", &ch);
+					getchar();
+					if(tolower(ch) == 'y'){
+						qm_create_questions();					
+						qm_start();
+					}
+					else{
+						printf("\nPress ENTER key to go back to MAIN MENU.\n");
+						getchar();
+					}					
 					break;
 	
 			case 2: qm_start();
 					break;
 			
-			case 3: exit(0);
+			case 3: printf("\nThank you for using this application.\n");
+					exit(0);
 			
 			default: printf("\nPlease enter a valid option!\n");
 		}
@@ -34,7 +44,6 @@ int main() {
 		scanf("%c", &ch);
 		getchar();
 	}
-	while(tolower(ch) == 'y');
-		
+	while(tolower(ch) == 'y');	
 	return 0;
 }

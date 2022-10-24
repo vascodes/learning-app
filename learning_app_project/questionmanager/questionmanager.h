@@ -3,7 +3,6 @@
 
 # define MAX_STR_LEN 200
 # define MAX_QUESTIONS 200
-# define MAX_FREQ 2
 # define DEFAULT_FREQ 2
 # define DEFAULT_FILENAME "qalist.txt"
 # define QUESTION_FORMAT_STR "%s|%s|%d\n"
@@ -14,6 +13,8 @@ typedef struct qm_question{
     char question[MAX_STR_LEN];
     char answer[MAX_STR_LEN];
 } question;
+
+int get_max_int(int a, int b);
 
 void *qm_get_question_str(char *question, char *answer, int freq, char out_str[]);
 

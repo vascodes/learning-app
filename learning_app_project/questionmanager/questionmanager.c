@@ -10,6 +10,10 @@
 int questions_arr_len;
 question questions_arr[MAX_QUESTIONS];
 
+int get_max_int(int a, int b){
+	return a > b ? a : b;
+}
+
 void *qm_get_question_str(char *question, char *answer, int freq, char out_str[]){
 	snprintf(out_str, MAX_STR_LEN, QUESTION_FORMAT_STR, question, answer, freq);
 }
@@ -124,7 +128,7 @@ void qm_start(){
 	
 	int num_questions, i;
 	int is_session_done, is_exit;
-	int max_freq_from_list = 1;
+	int max_freq = 0;
 	
 	question q;
 	question questions[MAX_QUESTIONS];
@@ -144,8 +148,10 @@ void qm_start(){
 				
 		for(i = 0; i < num_questions; i++){					
 			// Ignore questions with frequency as 0.
-			if(questions[i].frequency > 0)
+			if(questions[i].frequency > 0){
+				max_freq = get_max_int(max_freq, questions[i].frequency);
 				pq_enqueue(questions[i]);
+			}
 		}
 						
 		do{	
@@ -185,33 +191,35 @@ void qm_start(){
 					// Reduce frequency of current question if answer is correct.
 					// Frequency cannot be less than 0.
 					if(new_question.frequency != 0)
-						--new_question.frequency;					
-																							
-					// enqueue to priority queue.
-					pq_enqueue(new_question);						
+						--new_question.frequency;																																							
 				}
 				else{
 					printf("\nWrong Answer!!\n");
 					
 					//TODO: Change max freq according to questions in qalist.txt
 					
-					// Increment frequency of current question if answer is wrong.
-					// Frequency of current question will not be incremnted above MAX_FREQ.
-					if(new_question.frequency != MAX_FREQ){
-						++new_question.frequency;				
-					}
-															
-					// enqueue to priority queue.
-					pq_enqueue(new_question);					
+					/*
+						Increment frequency of current question if answer is wrong.						
+						Frequency of current question will not be incremented above,
+							maximum frequency that is in question list.
+					*/
+					if(new_question.frequency != max_freq)
+						++new_question.frequency;																											
 				}
-				printf("\nPress any key to show next question.");
-				getchar();																		
+				// enqueue current question to priority queue.
+				pq_enqueue(new_question);
+				
+				//TODO: Validate key press.
+				printf("\nPress ENTER key to show next question.");
+				getchar();																	
 			}			
 			
-			// When all questions have been mastered.
-			if(pq_is_empty() == 1 && is_queue_empty() == 1){
-				is_session_done = 1;								
-			}
+			/* 
+				Session is complete when all questions have been mastered.
+				ie: Both queues become empty.
+			*/
+			if(pq_is_empty() == 1 && is_queue_empty() == 1)
+				is_session_done = 1;											
 			
 			if(!is_session_done){
 				printf("\nDo you want to exit session now?(y/n): ");
