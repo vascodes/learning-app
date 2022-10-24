@@ -115,7 +115,6 @@ int qm_get_all_questions(question out_arr[]){
 	return i;
 }
 
-
 void qm_start(){
 	int num_questions, i;
 	question q;
@@ -133,39 +132,18 @@ void qm_start(){
 		queue = (question *) malloc(num_questions * sizeof(question));
 		queue_len = num_questions;
 		
-		// Add all questions to queue.
-//		for(i = 0; i < num_questions; i++){					
-//			// Ignore questions with frequency as 0.
-//			if(questions[i].frequency > 0)
-//				queue_enqueue(questions[i]);
-//		}
-		
 		printf("\nAdding initial questions to pq.\n");
 		for(i = 0; i < num_questions; i++){					
 			// Ignore questions with frequency as 0.
 			if(questions[i].frequency > 0)
 				pq_enqueue(questions[i]);
 		}
-		
-//		printf("\nQuestions in qq: \n");
-//		queue_display();
-		
+				
 		//printf("\nis pq empty: %d, is qq empty: %d\n", is_pq_empty(), is_queue_empty());
-		
-		// Dequeue all questions from questions queue to prioirity queue.
-//		for(i = 0; i < num_questions; i++){					
-//			question temp;
-//			queue_dequeue(&temp);
-//			pq_enqueue(temp);
-//		}
-										
-//		printf("\n\nQuestions in pq: \n");
-//		pq_display();
-		
-		printf("\nis pq empty: %d, is qq empty: %d\n", is_pq_empty(), is_queue_empty());
 		char ch;
 		do{	
 			system("cls");								
+			
 			// Dequeue all priority queue elements to question queue.
 			printf("\nDequeing all questions from pq to qq.\n");
 			while(is_pq_empty() == 0){
@@ -174,12 +152,11 @@ void qm_start(){
 				queue_enqueue(temp);								
 			}
 			
-			printf("\nQuestions in qq: \n");
-			queue_display();
-			printf("\nQuestions in pq: \n");
-			pq_display();			
-			
-			printf("\nis pq empty: %d, is qq empty: %d\n", is_pq_empty(), is_queue_empty());
+//			printf("\nQuestions in qq: \n");
+//			queue_display();
+//			printf("\nQuestions in pq: \n");
+//			pq_display();			
+						
 			while(is_queue_empty() == 0)
 			{				
 				int prev_freq;
@@ -228,9 +205,9 @@ void qm_start(){
 				}																		
 			}			
 			
-			// When both queues are empty, all questions have been mastered.
+			// When all questions have been mastered.
 			if(is_pq_empty() == 1 && is_queue_empty() == 1){
-				printf("\nNo more questions left to learn! All questions mastered!!\n");
+				qm_session_done();
 				break;
 			}
 			
@@ -238,7 +215,7 @@ void qm_start(){
 			scanf("%c", &ch);
 			getchar();
 			if(tolower(ch) == 'y'){
-				printf("\nThank you, your current session is done.");		
+				qm_exit();
 				break;
 			}								
 				
@@ -250,3 +227,10 @@ void qm_start(){
 	free(priority_queue);
 }
 
+void qm_session_done(){
+	printf("\nNo more questions left to learn! All questions mastered!!\n");
+}
+
+void qm_exit(){
+	printf("\nThank you, your current session is done.");
+}

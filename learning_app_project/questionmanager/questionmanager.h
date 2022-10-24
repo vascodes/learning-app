@@ -31,4 +31,10 @@ void qm_set_questions_arr();
 
 int qm_get_all_questions(question out_arr[]);
 
+void qm_session_done();
+
+void qm_exit();
+
+void qm_start();
+
 #endif
