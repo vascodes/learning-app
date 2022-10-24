@@ -10,20 +10,22 @@ int main() {
 	//qm_create_questions();
 	//qm_start();
 			
-	int array[10];
-	insert_to_heap(array, 3);
-	insert_to_heap(array, 4);
-	insert_to_heap(array, 9);
-	insert_to_heap(array, 5);
-	insert_to_heap(array, 2);
+	pq = (int *) malloc(10 * sizeof(int));	
+	
+	insert_to_heap(3);
+    insert_to_heap(4);
+    insert_to_heap(9);
+    insert_to_heap(5);
+    insert_to_heap(2);
+    insert_to_heap(10);
 	
 	printf("Max-Heap array: ");
-	display(array, size);
+	display();
 	
-	delete_from_heap(array, 4);
+	delete_from_heap(4);
 	
 	printf("After deleting an element: ");	
-	display(array, size);
+	display();
 	
 	return 0;
 }
