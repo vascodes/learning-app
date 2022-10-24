@@ -11,19 +11,18 @@ int main() {
 	//qm_start();
 			
 	int array[10];
-	insert(array, 3);
-	insert(array, 4);
-	insert(array, 9);
-	insert(array, 5);
-	insert(array, 2);
+	insert_to_heap(array, 3);
+	insert_to_heap(array, 4);
+	insert_to_heap(array, 9);
+	insert_to_heap(array, 5);
+	insert_to_heap(array, 2);
 	
 	printf("Max-Heap array: ");
 	display(array, size);
 	
-	deleteRoot(array, 4);
+	delete_from_heap(array, 4);
 	
-	printf("After deleting an element: ");
-	
+	printf("After deleting an element: ");	
 	display(array, size);
 	
 	return 0;

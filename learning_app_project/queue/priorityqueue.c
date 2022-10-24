@@ -32,7 +32,7 @@ void heapify(int pq[], int size, int i) {
 }
 
 // Function to insert an element into the tree
-void insert(int pq[], int newNum) {
+void insert_to_heap(int pq[], int newNum) {
   if (size == 0) {
     pq[0] = newNum;
     size += 1;
@@ -49,7 +49,7 @@ void insert(int pq[], int newNum) {
 }
 
 // Function to delete an element from the tree
-int deleteRoot(int pq[]) {
+int delete_from_heap(int pq[]) {
   int i, num = pq[0];
   int deleted = pq[0];
   
