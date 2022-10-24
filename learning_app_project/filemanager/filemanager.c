@@ -67,3 +67,14 @@ int fm_get_line_by_number(char *filename, int line_num, char *out_str){
 	fclose(file_ptr);
 	return is_line_found;
 }
+
+int fm_is_file_exists(char *filename){
+	int is_file_exists;
+	
+	file_ptr = fopen(filename, "r");
+	if(file_ptr != NULL)
+		is_file_exists = 1;
+	fclose(file_ptr);
+	
+	return is_file_exists;
+}

@@ -25,19 +25,26 @@ void qm_add_question_from_user(){
 	char question_str[MAX_STR_LEN];
 	char ch;
 	
+	system("cls");
+	ui_print_equals();
 	printf("\nEnter a question: ");
-	gets(qn);
+	gets(qn);	
+	
+	ui_print_equals();
 	printf("\nEnter answer for above question: ");
-	gets(ans);
+	gets(ans);	
+	
 	int is_yes = ui_prompt_yes_or_no("Do you want to enter frequency for this question");	
-	if(is_yes){
+	if(is_yes){		
 		printf("\nEnter frequency of this question: ");
 		scanf("%d", &fq);
 		getchar(); // To discard the enter key press.
+		ui_print_equals();
 	}
 	else{
-		fq = DEFAULT_FREQ;
+		fq = DEFAULT_FREQ;		
 		printf("\nFrequency of this question set to %d by default.", DEFAULT_FREQ);
+		ui_print_asterisks();
 	}
 	
 	qm_get_question_str(qn, ans, fq, question_str);
@@ -48,9 +55,10 @@ void qm_create_questions(){
 	int num, i;
 	
 	fm_create_file(DEFAULT_FILENAME);
+	system("cls");	
 	printf("\nPlease enter the number of questions you want to enter: ");
 	scanf("%d", &num);
-	getchar(); // To discard the enter key press.
+	getchar(); // To discard the enter key press.	
 	for(i = 0; i < num; i++){
 		qm_add_question_from_user();
 	}
@@ -124,6 +132,12 @@ int get_questions_arr_len(){
 
 void qm_start(){
 	char ch;
+	
+	int is_file_exists = fm_is_file_exists(DEFAULT_FILENAME);
+	if(!is_file_exists){
+		ui_print_warning("Could not find previous questions. Please start a new session.");
+		return;
+	}
 	
 	int num_questions, i;
 	int is_session_done, is_exit;

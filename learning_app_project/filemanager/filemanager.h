@@ -39,4 +39,11 @@ int fm_append_line_to_end(char *filename, char str[]);
 */
 int fm_get_line_by_number(char *filename, int line_num, char *out_str);
 
+
+/*
+	Checks whether file with given filename exists.
+	Returns 1 if file exists.
+*/
+int fm_is_file_exists(char *filename);
+
 #endif
