@@ -1,0 +1,5 @@
+eins|1|2
+zwei|2|2
+drei|3|2
+vier|4|2
+fuenf|5|2

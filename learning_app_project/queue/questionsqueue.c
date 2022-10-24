@@ -67,3 +67,10 @@ void queue_display(){
 int is_queue_empty(){
 	return (queue_len == 0 || queue_rear == -1);
 }
+
+void clear_queue(){
+	while(!is_queue_empty()){
+		question temp;
+		queue_dequeue(&temp);
+	}	
+}

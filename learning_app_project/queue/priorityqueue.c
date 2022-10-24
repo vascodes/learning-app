@@ -96,3 +96,10 @@ void pq_display() {
   for (i = 0; i < size; ++i)
     printf("%s|%s|%d \n", priority_queue[i].question, priority_queue[i].answer, priority_queue[i].frequency);  	
 }
+
+void pq_clear(){
+	while(!is_pq_empty()){
+		question temp;
+		pq_dequeue(&temp);
+	}	
+}

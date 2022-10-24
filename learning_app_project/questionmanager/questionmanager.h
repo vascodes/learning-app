@@ -37,4 +37,6 @@ void qm_exit();
 
 void qm_start();
 
+void destroy_queues();
+
 #endif
