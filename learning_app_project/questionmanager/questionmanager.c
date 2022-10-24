@@ -179,26 +179,29 @@ void qm_start(){
 															
 				// Ask question to user and then read answer.
 				ui_print_equals();
-				printf("\t\tQuestion: %s?", new_question.question);
+				printf("\tQuestion: %s?", new_question.question);
 				ui_print_equals();
-				printf("\n\t\tEnter answer: ");				
+				printf("\n\tEnter answer: ");				
 				gets(ans);
 				
 				prev_freq = new_question.frequency;
 				is_correct = qm_is_correct_answer(new_question, ans);			
 				if(is_correct == 0){
 					ui_print_equals();
-					printf("\t\tYOUR ANSWER IS CORRECT!!\n");
-					ui_print_equals();
+					printf("\tYOUR ANSWER IS CORRECT!!\n");										
 					
 					// Reduce frequency of current question if answer is correct.
 					// Frequency cannot be less than 0.
 					if(new_question.frequency != 0)
-						--new_question.frequency;																																							
+						--new_question.frequency;		
+					
+					printf("\n\tTurns left to master this question: %d", new_question.frequency);
+					ui_print_equals();
 				}
 				else{
 					ui_print_asterisks();
-					printf("\n\t\tSORRY, YOUR ANSWER IS WRONG.\n");
+					printf("\n\tSORRY, YOUR ANSWER IS WRONG.\n");
+					printf("\n\tThe correct answer is: %s\n", new_question.answer);
 					ui_print_asterisks();										
 					
 					/*
@@ -213,7 +216,7 @@ void qm_start(){
 				pq_enqueue(new_question);
 				
 				//TODO: Validate key press.
-				ui_print_press_key("\t\tPress ENTER key to show next question.");
+				ui_print_press_key("\tPress ENTER key to show next question.");
 				system("cls");																	
 			}			
 			
@@ -243,7 +246,7 @@ void qm_session_done(){
 }
 
 void qm_exit(){
-	ui_print_success_text("Thank you, your current session is done.");	
+	ui_print_success_text("Thank you, your current session is complete.");	
 	destroy_queues();
 }
 

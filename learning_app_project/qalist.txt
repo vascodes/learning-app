@@ -1,4 +1,4 @@
-What is eins in German|1|2
-What is zwei in German|2|1
-What is vier in German|4|4
-What is drei in German|3|3
+Which number is called "eins" in German|1|2
+Which number is called "zwei" in German|2|1
+Which number is called "vier" in German|4|4
+Which number is called "drei" in German|3|3
