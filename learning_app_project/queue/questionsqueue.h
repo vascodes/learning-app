@@ -10,5 +10,6 @@ void questions_queue_enqueue(question q);
 void questions_queue_dequeue(question *out_question);
 void questions_queue_sort(question *pq, int n);
 void questions_queue_display();
+int is_questions_queue_empty();
 
 #endif

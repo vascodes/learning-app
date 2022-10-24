@@ -82,7 +82,8 @@ void get_str_from_question(question q, char *out_str){
 	snprintf(out_str, MAX_STR_LEN, QUESTION_FORMAT_STR, q.question, q.answer, q.frequency);
 }
 
-int qm_is_correct_answer(question q, char *ans_str){
+int qm_is_correct_answer(question q, char *ans_str){	
+	printf("\nActual answer: %s and given answer: %s", q.answer, ans_str);
 	return strcmpi(q.answer, ans_str);
 }
 
@@ -92,9 +93,9 @@ void qm_set_questions_arr(){
 	char line[MAX_STR_LEN];
 	question q;
 	
+	// Read all lines from a file and store it to an array of questions.
 	i = 0;
 	line_num = 1;	
-	// Read all lines from a file and store it to an array of questions.
 	is_line_found = fm_get_line_by_number(DEFAULT_FILENAME, line_num, line);
 	while(is_line_found){									
 		qm_get_question_from_str(line, &q);
@@ -134,12 +135,40 @@ void qm_start(){
 			questions_queue_enqueue(questions[i]);
 		}
 		
-		printf("\nBefore sort: ");
-		questions_queue_display();
-		questions_queue_sort(questions_queue, num_questions);		
-		printf("\n\nAfter sort: ");				
-		questions_queue_display();				
+//		printf("\nBefore sort: ");
+//		questions_queue_display();
+//		questions_queue_sort(questions_queue, num_questions);		
+//		printf("\n\nAfter sort: ");				
+//		questions_queue_display();				
 		
+		while(!is_questions_queue_empty()){
+			int prev_freq;
+			int is_correct;			
+			char ans[MAX_STR_LEN];
+			question new_question;
+			
+			questions_queue_dequeue(&new_question);
+			
+			printf("\nQuestion: %s?", new_question.question);
+			printf("\nEnter answer: ");
+			gets(ans);
+			
+			prev_freq = new_question.frequency;
+			is_correct = qm_is_correct_answer(new_question, ans);			
+			if(is_correct == 0){
+				printf("\nAnswer is correct!\n");
+				if(new_question.frequency != 1)
+					--new_question.frequency;
+				// else enqueue to priority queue									
+			}
+			else{
+				printf("\nWrong Answer!!\n");
+				if(new_question.frequency != MAX_FREQ){
+					++new_question.frequency;				
+				}
+				// else enqueue to priority queue
+			}						
+		}
 		
 //		priority_queue_len = num_questions;
 //		questions_queue_len = num_questions;

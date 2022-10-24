@@ -19,15 +19,17 @@ void questions_queue_enqueue(question q){
 }
 
 void questions_queue_dequeue(question *out_question){	
-	if(questions_queue_front == -1)
+	// empty queue
+	if(is_questions_queue_empty())
 		return;
-	else{
-		question temp = questions_queue[questions_queue_front];		
-		strcpy(out_question->question, temp.question);
-		strcpy(out_question->answer, temp.answer);
-		out_question->frequency = temp.frequency;
-		questions_queue_front++;
-	}
+			
+	question temp = questions_queue[questions_queue_front];		
+	strcpy(out_question->question, temp.question);
+	strcpy(out_question->answer, temp.answer);
+	out_question->frequency = temp.frequency;
+	
+	questions_queue_front++;
+	questions_queue_len--;	
 }
 
 void questions_queue_sort(question *pq, int n){
@@ -55,4 +57,8 @@ void questions_queue_display(){
 				questions_queue[i].answer, 
 				questions_queue[i].frequency);			
 	}
+}
+
+int is_questions_queue_empty(){
+	return (questions_queue_len == 0);
 }

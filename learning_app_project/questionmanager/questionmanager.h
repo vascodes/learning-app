@@ -3,6 +3,7 @@
 
 # define MAX_STR_LEN 200
 # define MAX_QUESTIONS 200
+# define MAX_FREQ 2
 # define DEFAULT_FREQ 2
 # define DEFAULT_FILENAME "qalist.txt"
 # define QUESTION_FORMAT_STR "%s|%s|%d\n"
