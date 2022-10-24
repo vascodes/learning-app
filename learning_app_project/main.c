@@ -2,48 +2,43 @@
 #include <stdlib.h>
 
 #include "questionmanager/questionmanager.h"
+#include "uimanager/uimanager.h"
 
 int main() {				
 	int i;	
 	
 	char ch;
+	int is_show_menu;
 	do{
 		system("cls");
 		int option;
-		printf("\n\tSMART LEARNING APP MAIN MENU\n");
+		ui_print_header("SMART LEARNING APP MAIN MENU");
 		printf("\n1. Start a new learning session.");
 		printf("\n2. Start previous learning session.");
 		printf("\n3. Exit.");
-		printf("\nEnter an option (1/2/3): ");
+		printf("\n\nEnter an option (1/2/3): ");
 		scanf("%d", &option);
 		getchar();
 		
 		switch(option){
-			case 1: printf("\nWARNING! Starting a new session will erase data of previous session. Continue?(y/n): ");
-					scanf("%c", &ch);
-					getchar();
-					if(tolower(ch) == 'y'){
+			case 1: ui_print_warning("Starting a new session will erase data of previous session.");									
+					if(ui_prompt_continue()){
 						qm_create_questions();					
 						qm_start();
-					}
-					else{
-						printf("\nPress ENTER key to go back to MAIN MENU.\n");
-						getchar();
-					}					
+					}										
 					break;
 	
 			case 2: qm_start();
 					break;
 			
-			case 3: printf("\nThank you for using this application.\n");
+			case 3: ui_print_success_text("Thank you for using this application.");
 					exit(0);
 			
-			default: printf("\nPlease enter a valid option!\n");
+			default: ui_print_failure_text("Please enter a valid option!");
 		}
-		printf("\nDo you want to go back to MAIN MENU? (y/n): ");
-		scanf("%c", &ch);
-		getchar();
-	}
-	while(tolower(ch) == 'y');	
+		is_show_menu = ui_prompt_yes_or_no("Do you want to go back to MAIN MENU");
+	}	
+	while(is_show_menu);	
+	
 	return 0;
 }
