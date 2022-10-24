@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000000000000
-UnitCount=7
+UnitCount=9
 
 [VersionInfo]
 Major=1
@@ -112,6 +112,26 @@ BuildCmd=
 
 [Unit7]
 FileName=queue\questionsqueue.h
+CompileCpp=0
+Folder=queue
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit8]
+FileName=queue\priorityqueue.c
+CompileCpp=0
+Folder=queue
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit9]
+FileName=queue\priorityqueue.h
 CompileCpp=0
 Folder=queue
 Compile=1

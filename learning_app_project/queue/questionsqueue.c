@@ -3,9 +3,6 @@
 
 #include "questionsqueue.h"
 
-int questions_queue_len;
-question *questions_queue;
-
 int questions_queue_front = -1, 
 	questions_queue_rear = -1;
 	
