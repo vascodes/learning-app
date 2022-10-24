@@ -1,15 +1,15 @@
-#ifndef QUESTIONS_QUEUE_H
-# define QUESTIONS_QUEUE_H
+#ifndef queue_H
+# define queue_H
 
 #include "../questionmanager/questionmanager.h"
 
-int questions_queue_len;
-question *questions_queue;
+int queue_len;
+question *queue;
 
-void questions_queue_enqueue(question q);
-void questions_queue_dequeue(question *out_question);
-void questions_queue_sort(question *pq, int n);
-void questions_queue_display();
-int is_questions_queue_empty();
+void queue_enqueue(question q);
+void queue_dequeue(question *out_question);
+void queue_sort(question *pq, int n);
+void queue_display();
+int is_queue_empty();
 
 #endif

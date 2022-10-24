@@ -5,6 +5,7 @@
 #include "../filemanager/filemanager.h"
 #include "../questionmanager/questionmanager.h"
 #include "../queue/questionsqueue.h"
+#include "../queue/priorityqueue.h"
 
 int questions_arr_len;
 question questions_arr[MAX_QUESTIONS];
@@ -82,8 +83,7 @@ void get_str_from_question(question q, char *out_str){
 	snprintf(out_str, MAX_STR_LEN, QUESTION_FORMAT_STR, q.question, q.answer, q.frequency);
 }
 
-int qm_is_correct_answer(question q, char *ans_str){	
-	printf("\nActual answer: %s and given answer: %s", q.answer, ans_str);
+int qm_is_correct_answer(question q, char *ans_str){		
 	return strcmpi(q.answer, ans_str);
 }
 
@@ -128,58 +128,125 @@ void qm_start(){
 		printf("\nNo questions left to learn. Please start a new session.\n");
 	}
 	else{
-		questions_queue = (question *) malloc(num_questions * sizeof(question));
-		questions_queue_len = questions_arr_len;
+		priority_queue = (question *) malloc(num_questions * sizeof(question));		
 		
-		// Add all questions to questions_queue.
-		for(i = 0; i < questions_queue_len; i++){					
-			questions_queue_enqueue(questions[i]);
-		}
-						
-		while(!is_questions_queue_empty()){
-			int prev_freq;
-			int is_correct;			
-			char ans[MAX_STR_LEN];
-			question new_question;
-			
-			// Get a new question from questions queue.
-			questions_queue_dequeue(&new_question);
-			
-			// Ask question to user and then read answer.
-			printf("\nQuestion: %s?", new_question.question);
-			printf("\nEnter answer: ");
-			gets(ans);
-			
-			prev_freq = new_question.frequency;
-			is_correct = qm_is_correct_answer(new_question, ans);			
-			if(is_correct == 0){
-				printf("\nAnswer is correct!\n");
-				
-				// Reduce frequency of current question if answer is correct.
-				// Minimum valid frequency is 1.
-				if(new_question.frequency != 1)
-					--new_question.frequency;
-				// else enqueue to priority queue									
-			}
-			else{
-				printf("\nWrong Answer!!\n");
-				
-				// Increment frequency of current question if answer is wrong.
-				// Frequency of current question will not be incremnted above MAX_FREQ.
-				if(new_question.frequency != MAX_FREQ){
-					++new_question.frequency;				
-				}
-				// else enqueue to priority queue
-			}						
-		}
+		queue = (question *) malloc(num_questions * sizeof(question));
+		queue_len = num_questions;
 		
-//		priority_queue_len = num_questions;
-//		questions_queue_len = num_questions;
-//		while(priority_queue_len > 0 && questions_queue_len > 0){
-//			
+		// Add all questions to queue.
+//		for(i = 0; i < num_questions; i++){					
+//			// Ignore questions with frequency as 0.
+//			if(questions[i].frequency > 0)
+//				queue_enqueue(questions[i]);
 //		}
 		
-		//free(questions_queue);
+		printf("\nAdding initial questions to pq.\n");
+		for(i = 0; i < num_questions; i++){					
+			// Ignore questions with frequency as 0.
+			if(questions[i].frequency > 0)
+				pq_enqueue(questions[i]);
+		}
+		
+//		printf("\nQuestions in qq: \n");
+//		queue_display();
+		
+		//printf("\nis pq empty: %d, is qq empty: %d\n", is_pq_empty(), is_queue_empty());
+		
+		// Dequeue all questions from questions queue to prioirity queue.
+//		for(i = 0; i < num_questions; i++){					
+//			question temp;
+//			queue_dequeue(&temp);
+//			pq_enqueue(temp);
+//		}
+										
+//		printf("\n\nQuestions in pq: \n");
+//		pq_display();
+		
+		printf("\nis pq empty: %d, is qq empty: %d\n", is_pq_empty(), is_queue_empty());
+		char ch;
+		do{	
+			system("cls");								
+			// Dequeue all priority queue elements to question queue.
+			printf("\nDequeing all questions from pq to qq.\n");
+			while(is_pq_empty() == 0){
+				question temp;
+				pq_dequeue(&temp);				
+				queue_enqueue(temp);								
+			}
+			
+			printf("\nQuestions in qq: \n");
+			queue_display();
+			printf("\nQuestions in pq: \n");
+			pq_display();			
+			
+			printf("\nis pq empty: %d, is qq empty: %d\n", is_pq_empty(), is_queue_empty());
+			while(is_queue_empty() == 0)
+			{				
+				int prev_freq;
+				int is_correct;			
+				char ans[MAX_STR_LEN];
+				question new_question;
+				
+				// Get a new question from questions queue.
+				queue_dequeue(&new_question);
+							
+				// Ignore questions with frequency as 0.
+				if(new_question.frequency == 0)
+					continue;
+															
+				// Ask question to user and then read answer.
+				printf("\nQuestion: %s?", new_question.question);
+				printf("\nEnter answer: ");
+				gets(ans);
+				
+				prev_freq = new_question.frequency;
+				is_correct = qm_is_correct_answer(new_question, ans);			
+				if(is_correct == 0){
+					printf("\nAnswer is correct!\n");
+					
+					// Reduce frequency of current question if answer is correct.
+					// Frequency cannot be less than 0.
+					if(new_question.frequency != 0)
+						--new_question.frequency;					
+																							
+					// enqueue to priority queue.
+					pq_enqueue(new_question);						
+				}
+				else{
+					printf("\nWrong Answer!!\n");
+					
+					//TODO: Change max freq according to questions in qalist.txt
+					
+					// Increment frequency of current question if answer is wrong.
+					// Frequency of current question will not be incremnted above MAX_FREQ.
+					if(new_question.frequency != MAX_FREQ){
+						++new_question.frequency;				
+					}
+															
+					// enqueue to priority queue.
+					pq_enqueue(new_question);					
+				}																		
+			}			
+			
+			// When both queues are empty, all questions have been mastered.
+			if(is_pq_empty() == 1 && is_queue_empty() == 1){
+				printf("\nNo more questions left to learn! All questions mastered!!\n");
+				break;
+			}
+			
+			printf("\nDo you want to exit session now?(y/n): ");
+			scanf("%c", &ch);
+			getchar();
+			if(tolower(ch) == 'y'){
+				printf("\nThank you, your current session is done.");		
+				break;
+			}								
+				
+		} while(is_pq_empty() == 0 || is_queue_empty() == 0);
+		
 	}
+	// TODO: clear both queues.
+	free(queue);
+	free(priority_queue);
 }
 

@@ -3,33 +3,41 @@
 
 #include "questionsqueue.h"
 
-int questions_queue_front = -1, 
-	questions_queue_rear = -1;
+int queue_front = -1, 
+	queue_rear = -1;
 	
-void questions_queue_enqueue(question q){
-	if(questions_queue_rear + 1 == questions_queue_len)
+void queue_enqueue(question q){
+	if(queue_rear + 1 == queue_len){
+		//printf("\nQueue is full!\n");
 		return;
-		
-	questions_queue_front = 0;
-	questions_queue_rear++;
-	questions_queue[questions_queue_rear] = q;
+	}
+	
+	if(queue_front == -1)	
+		queue_front = 0;
+	
+	queue_rear++;
+	queue[queue_rear] = q;	
 }
 
-void questions_queue_dequeue(question *out_question){	
+void queue_dequeue(question *out_question){	
 	// empty queue
-	if(is_questions_queue_empty())
+	if(is_queue_empty())
 		return;
-			
-	question temp = questions_queue[questions_queue_front];		
-	strcpy(out_question->question, temp.question);
-	strcpy(out_question->answer, temp.answer);
-	out_question->frequency = temp.frequency;
+						
+	question deleted = queue[queue_front];		
+	strcpy(out_question->question, deleted.question);
+	strcpy(out_question->answer, deleted.answer);
+	out_question->frequency = deleted.frequency;
+		
+	queue_front++;		
+	//queue_len--;
 	
-	questions_queue_front++;
-	questions_queue_len--;	
+	if(queue_front > queue_rear){
+		queue_front = queue_rear = -1;
+	}
 }
 
-void questions_queue_sort(question *pq, int n){
+void queue_sort(question *pq, int n){
 	int i, j;
 	question temp;
 	for(i = 0; i < n; i++){
@@ -43,19 +51,19 @@ void questions_queue_sort(question *pq, int n){
 	}
 }
 
-void questions_queue_display(){
-	if(questions_queue_front == -1)
-		return;
+void queue_display(){
+	if(is_queue_empty())
+		return;		
 
 	int i;
-	for(i = questions_queue_front; i <= questions_queue_rear; i++){		
+	for(i = queue_front; i <= queue_rear; i++){		
 		printf("\n%s|%s|%d", 
-				questions_queue[i].question, 
-				questions_queue[i].answer, 
-				questions_queue[i].frequency);			
+				queue[i].question, 
+				queue[i].answer, 
+				queue[i].frequency);			
 	}
 }
 
-int is_questions_queue_empty(){
-	return (questions_queue_len == 0);
+int is_queue_empty(){
+	return (queue_len == 0 || queue_rear == -1);
 }

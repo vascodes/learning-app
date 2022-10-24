@@ -2,50 +2,39 @@
 #include <stdlib.h>
 
 #include "questionmanager/questionmanager.h"
-#include "queue/priorityqueue.h"
 
 int main() {				
 	int i;	
-	//question questions[100];
-	//qm_create_questions();
-	//qm_start();
+	
+	char ch;
+	do{
+		system("cls");
+		int option;
+		printf("\n\tSMART LEARNING APP MAIN MENU\n");
+		printf("\n1. Start a new learning session.");
+		printf("\n2. Resume previous learning session.");
+		printf("\n3. Exit.");
+		printf("\nEnter an option (1/2/3): ");
+		scanf("%d", &option);
+		getchar();
+		
+		switch(option){
+			case 1: qm_create_questions();
+					qm_start();
+					break;
+	
+			case 2: qm_start();
+					break;
 			
-	int pq_size = 10;
-	pq = (question *) malloc(pq_size * sizeof(question));	
-		
-	question q1;
-	strcpy(q1.question, "q1");
-	strcpy(q1.answer, "a1");
-	q1.frequency = 2;
-	
-	question q2;
-	strcpy(q2.question, "q2");
-	strcpy(q2.answer, "a2");
-	q2.frequency = 5;
-	
-	question q3;
-	strcpy(q3.question, "q3");
-	strcpy(q3.answer, "a3");
-	q3.frequency = 3;
-	
-	pq_enqueue(q1);
-    pq_enqueue(q2);    
-    pq_enqueue(q3);    
-		
-	display();		
-
-	question t;
-	pq_dequeue(&t);
-	printf("\nDeleted: %s|%s|%d", t.question, t.answer, t.frequency);
-	pq_dequeue(&t);
-	printf("\nDeleted: %s|%s|%d", t.question, t.answer, t.frequency);
-	pq_dequeue(&t);
-	printf("\nDeleted: %s|%s|%d", t.question, t.answer, t.frequency);
-//	
-//	pq_dequeue(&t);
-//	printf("\nDeleted: %s|%s|%s", t.question, t.answer, t.frequency);
-
-//	display();
+			case 3: exit(0);
+			
+			default: printf("\nPlease enter a valid option!\n");
+		}
+		printf("\nDo you want to go back to MAIN MENU? (y/n): ");
+		scanf("%c", &ch);
+		getchar();
+	}
+	while(tolower(ch) == 'y');
 		
 	return 0;
 }
