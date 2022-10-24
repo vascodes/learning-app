@@ -131,24 +131,21 @@ void qm_start(){
 		questions_queue = (question *) malloc(num_questions * sizeof(question));
 		questions_queue_len = questions_arr_len;
 		
+		// Add all questions to questions_queue.
 		for(i = 0; i < questions_queue_len; i++){					
 			questions_queue_enqueue(questions[i]);
 		}
-		
-//		printf("\nBefore sort: ");
-//		questions_queue_display();
-//		questions_queue_sort(questions_queue, num_questions);		
-//		printf("\n\nAfter sort: ");				
-//		questions_queue_display();				
-		
+						
 		while(!is_questions_queue_empty()){
 			int prev_freq;
 			int is_correct;			
 			char ans[MAX_STR_LEN];
 			question new_question;
 			
+			// Get a new question from questions queue.
 			questions_queue_dequeue(&new_question);
 			
+			// Ask question to user and then read answer.
 			printf("\nQuestion: %s?", new_question.question);
 			printf("\nEnter answer: ");
 			gets(ans);
@@ -157,12 +154,18 @@ void qm_start(){
 			is_correct = qm_is_correct_answer(new_question, ans);			
 			if(is_correct == 0){
 				printf("\nAnswer is correct!\n");
+				
+				// Reduce frequency of current question if answer is correct.
+				// Minimum valid frequency is 1.
 				if(new_question.frequency != 1)
 					--new_question.frequency;
 				// else enqueue to priority queue									
 			}
 			else{
 				printf("\nWrong Answer!!\n");
+				
+				// Increment frequency of current question if answer is wrong.
+				// Frequency of current question will not be incremnted above MAX_FREQ.
 				if(new_question.frequency != MAX_FREQ){
 					++new_question.frequency;				
 				}

@@ -10,7 +10,7 @@ int questions_queue_front = -1,
 	questions_queue_rear = -1;
 	
 void questions_queue_enqueue(question q){
-	if(questions_queue_rear == questions_queue_len)
+	if(questions_queue_rear + 1 == questions_queue_len)
 		return;
 		
 	questions_queue_front = 0;
