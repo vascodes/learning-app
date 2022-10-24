@@ -33,7 +33,7 @@ int ui_prompt_continue(){
 	int is_continue;
 	printf("\nDo you want to continue? (y/n): ");	
 	scanf("%c", &ch);
-	getchar();
+	getchar(); // to discard Enter key press.
 	if(tolower(ch) == 'y')
 		is_continue = 1;
 
@@ -68,4 +68,5 @@ void ui_print_press_key(char text[]){
 	ui_print_equals();
 	printf("\n%s\n", text);
 	ui_print_equals();	
+	getchar();
 }

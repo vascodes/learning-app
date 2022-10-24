@@ -19,4 +19,10 @@ void ui_print_press_key(char text[]);
 
 int ui_prompt_continue();
 
+int ui_prompt_yes_or_no(char text[]);
+
+void ui_print_success_text(char text[]);
+
+void ui_print_failure_text(char text[]);
+
 #endif

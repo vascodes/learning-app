@@ -6,6 +6,7 @@
 #include "../questionmanager/questionmanager.h"
 #include "../queue/questionsqueue.h"
 #include "../queue/priorityqueue.h"
+#include "../uimanager/uimanager.h"
 
 int questions_arr_len;
 question questions_arr[MAX_QUESTIONS];
@@ -28,10 +29,8 @@ void qm_add_question_from_user(){
 	gets(qn);
 	printf("\nEnter answer for above question: ");
 	gets(ans);
-	printf("\nDo you want to enter frequency for this question (y/n)?: ");
-	scanf("%c", &ch);
-	getchar(); // To discard the enter key press.
-	if(tolower(ch) == 'y'){
+	int is_yes = ui_prompt_yes_or_no("Do you want to enter frequency for this question");	
+	if(is_yes){
 		printf("\nEnter frequency of this question: ");
 		scanf("%d", &fq);
 		getchar(); // To discard the enter key press.
@@ -179,14 +178,18 @@ void qm_start(){
 					continue;
 															
 				// Ask question to user and then read answer.
-				printf("\nQuestion: %s?", new_question.question);
-				printf("\nEnter answer: ");
+				ui_print_equals();
+				printf("\t\tQuestion: %s?", new_question.question);
+				ui_print_equals();
+				printf("\n\t\tEnter answer: ");				
 				gets(ans);
 				
 				prev_freq = new_question.frequency;
 				is_correct = qm_is_correct_answer(new_question, ans);			
 				if(is_correct == 0){
-					printf("\nAnswer is correct!\n");
+					ui_print_equals();
+					printf("\t\tYOUR ANSWER IS CORRECT!!\n");
+					ui_print_equals();
 					
 					// Reduce frequency of current question if answer is correct.
 					// Frequency cannot be less than 0.
@@ -194,9 +197,9 @@ void qm_start(){
 						--new_question.frequency;																																							
 				}
 				else{
-					printf("\nWrong Answer!!\n");
-					
-					//TODO: Change max freq according to questions in qalist.txt
+					ui_print_asterisks();
+					printf("\n\t\tSORRY, YOUR ANSWER IS WRONG.\n");
+					ui_print_asterisks();										
 					
 					/*
 						Increment frequency of current question if answer is wrong.						
@@ -210,8 +213,8 @@ void qm_start(){
 				pq_enqueue(new_question);
 				
 				//TODO: Validate key press.
-				printf("\nPress ENTER key to show next question.");
-				getchar();																	
+				ui_print_press_key("\t\tPress ENTER key to show next question.");
+				system("cls");																	
 			}			
 			
 			/* 
@@ -222,12 +225,7 @@ void qm_start(){
 				is_session_done = 1;											
 			
 			if(!is_session_done){
-				printf("\nDo you want to exit session now?(y/n): ");
-				scanf("%c", &ch);
-				getchar();
-				if(tolower(ch) == 'y'){
-					is_exit = 1;				
-				}								
+				is_exit = ui_prompt_yes_or_no("Do you want to exit session now");								
 			}				
 		} while(pq_is_empty() == 0 || is_queue_empty() == 0);		
 	
@@ -240,12 +238,12 @@ void qm_start(){
 }
 
 void qm_session_done(){	
-	printf("\nNo more questions left to learn! All questions mastered!!\n");
+	ui_print_success_text("No more questions left to learn! All questions mastered!!");	
 	qm_exit();
 }
 
 void qm_exit(){
-	printf("\nThank you, your current session is done.\n");
+	ui_print_success_text("Thank you, your current session is done.");	
 	destroy_queues();
 }
 

@@ -1,4 +1,4 @@
-eins|1|2
-zwei|2|1
-drei|3|4
-vier|4|3
+What is eins in German|1|2
+What is zwei in German|2|1
+What is vier in German|4|4
+What is drei in German|3|3
