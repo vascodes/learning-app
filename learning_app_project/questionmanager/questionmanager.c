@@ -4,48 +4,10 @@
 
 #include "../filemanager/filemanager.h"
 #include "../questionmanager/questionmanager.h"
+#include "../queue/questionsqueue.h"
 
 int questions_arr_len;
 question questions_arr[MAX_QUESTIONS];
-
-int priority_queue_len;
-question *qm_priority_queue;
-int questions_queue_len;
-question *questions_queue;
-
-int pq_front = -1, pq_rear = -1;
-void enqueue(question q){
-	if(pq_rear == questions_arr_len)
-		return;
-	pq_front = 0;
-	pq_rear++;
-	qm_priority_queue[pq_rear] = q;
-}
-
-void dequeue(question *out_question){	
-	if(pq_front == -1)
-		return;
-	else{
-		question temp = qm_priority_queue[pq_front];		
-		strcpy(out_question->question, temp.question);
-		strcpy(out_question->answer, temp.answer);
-		out_question->frequency = temp.frequency;
-		pq_front++;
-	}
-}
-
-void disp(){
-	if(pq_front == -1)
-		return;
-
-	int i;
-	for(i = pq_front; i <= pq_rear; i++){		
-		printf("\n%s|%s|%d", 
-				qm_priority_queue[i].question, 
-				qm_priority_queue[i].answer, 
-				qm_priority_queue[i].frequency);			
-	}
-}
 
 void *qm_get_question_str(char *question, char *answer, int freq, char out_str[]){
 	snprintf(out_str, MAX_STR_LEN, QUESTION_FORMAT_STR, question, answer, freq);
@@ -152,20 +114,6 @@ int qm_get_all_questions(question out_arr[]){
 	return i;
 }
 
-// TODO: Implement priority queue using max heap.
-void sort_pq(question *pq, int n){
-	int i, j;
-	question temp;
-	for(i = 0; i < n; i++){
-		for(j = i+1; j < n; j++){
-			if(pq[i].frequency < pq[j].frequency){
-				temp = pq[i];
-				pq[i] = pq[j];
-				pq[j] = temp;
-			}
-		}
-	}
-}
 
 void qm_start(){
 	int num_questions, i;
@@ -179,15 +127,18 @@ void qm_start(){
 		printf("\nNo questions left to learn. Please start a new session.\n");
 	}
 	else{
-		qm_priority_queue = (question *) malloc(num_questions * sizeof(question));
-		for(i = 0; i < questions_arr_len; i++){					
-			enqueue(questions[i]);
+		questions_queue = (question *) malloc(num_questions * sizeof(question));
+		questions_queue_len = questions_arr_len;
+		
+		for(i = 0; i < questions_queue_len; i++){					
+			questions_queue_enqueue(questions[i]);
 		}
+		
 		printf("\nBefore sort: ");
-		disp();
-		sort_pq(qm_priority_queue, num_questions);		
+		questions_queue_display();
+		questions_queue_sort(questions_queue, num_questions);		
 		printf("\n\nAfter sort: ");				
-		disp();				
+		questions_queue_display();				
 		
 		
 //		priority_queue_len = num_questions;
@@ -196,7 +147,7 @@ void qm_start(){
 //			
 //		}
 		
-		//free(qm_priority_queue);
+		//free(questions_queue);
 	}
 }
 

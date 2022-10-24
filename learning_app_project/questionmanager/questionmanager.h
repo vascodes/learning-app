@@ -1,5 +1,5 @@
 #ifndef QUESTION_MANAGER_H
-# define FILE_MANAGER_H
+# define QUESTION_MANAGER_H
 
 # define MAX_STR_LEN 200
 # define MAX_QUESTIONS 200
